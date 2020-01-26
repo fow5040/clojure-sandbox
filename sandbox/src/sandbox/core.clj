@@ -1,4 +1,5 @@
 (ns sandbox.core
+  (:require [sandbox.simpledata :as simpledata])
   (:gen-class))
 
 (defn -main
@@ -17,4 +18,7 @@
 
 (inc-counter)
 
-(println "What a cool thing")
+(println (str "The counter is at " @counter))
+
+(simpledata/write-it-out "a sentence")
+

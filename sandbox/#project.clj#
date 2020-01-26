@@ -7,4 +7,3 @@
   :main ^:skip-aot sandbox.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
-
