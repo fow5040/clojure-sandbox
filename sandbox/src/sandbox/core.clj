@@ -1,5 +1,6 @@
 (ns sandbox.core
   (:require [sandbox.simpledata :as simpledata])
+  (:require [sandbox.infdata :as infdata])
   (:gen-class))
 
 (defn -main
