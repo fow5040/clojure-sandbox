@@ -26,6 +26,7 @@
   "uses inline func to print a bunch of keys"
   (map #(println %) mymap))
 
+;;define some sets
 (def setA #{:thingA :thingB :thingC :thingD})
 (def setB #{:thingB :thingC :thingD :thingE :thingF})
 (def setC #{:thingC :thingD :thingF})
@@ -38,6 +39,34 @@
   :superset? (sets/superset? setC setB)
   ])
 
+;;simple atom
 (def p
   (atom 0))
 (swap! p inc)
+
+;;show a race condition
+;;show that multiple threads can swap
+;;show that swap will retry and keep running the same func
+(def race
+ (atom 0))
+
+(defn inc-print [val]
+  (println (str "num" val))
+  (inc val))
+
+( defn start-race []
+  (let [n 1]
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+  )
+ )
+
+(println @race)
+
+
+
+
