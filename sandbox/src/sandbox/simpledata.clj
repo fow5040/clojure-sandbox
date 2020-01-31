@@ -37,6 +37,27 @@
   :superset? (sets/superset? setC setB)
   ])
 
+;;show a race condition
+;;show that multiple threads can swap
+;;show that swap will retry and keep running the same func
+(def race
+ (atom 0))
 
+(defn inc-print [val]
+  (println (str "num" val))
+  (inc val))
 
+( defn start-race []
+  (let [n 1]
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+    (future ( swap! race inc-print))
+  )
+ )
 
+;;(dotimes [race 500] (start-race))
+
+(println @race)
