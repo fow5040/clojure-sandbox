@@ -1,6 +1,7 @@
 (ns sandbox.core
   (:require [sandbox.simpledata :as simpledata])
   (:require [sandbox.infdata :as infdata])
+  (:require [sandbox.polyjava :as polyjava])
   (:gen-class))
 
 (defn -main
