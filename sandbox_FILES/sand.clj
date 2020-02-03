@@ -66,6 +66,7 @@
  )
 
 (println @race)
+(start-race)
 
 
 
