@@ -4,7 +4,21 @@ A Clojure library designed to ... well, that part is up to you.
 
 ## Usage
 
-FIXME
+This package was designed to test out functions.
+
+Functions specified:
+
+	`serpent-talk.talk/makebigly`
+
+		outputs all the capital special cases from the camel snake kebab library
+
+	`serpent-talk.talk/makesmallly`
+
+		outputs all the lowercase special cases from the camel snake kebab library
+
+Test with `lein test`
+
+Run with `lein run "word to do cases with"` 
 
 ## License
 
