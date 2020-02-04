@@ -114,28 +114,41 @@
 ;; I.E. if you're writing to the log file, the agent may be blocked indefinitely, so use send-off
 (dotimes [_ 10]
     (send time-bomb bomb-tick)
- )
+    )
+
+
+;;sleep for a bit so we wait for the agents to process
+(Thread/sleep 100)
+
 ;;executing this will fail since the agent is excepted
 ;;Need to restartagent before executing this
 (restart-agent time-bomb 10)
+(Thread/sleep 50)
 (send time-bomb reverse-bomb-tick )
 
+(Thread/sleep 50)
 ;;we can also change how agents handle failure
 ;;  :fail or :continue
+
 (def time-bomb (agent 10))
+(def times-detonated (atom 0))
+
 (set-error-mode! time-bomb :continue)
 
 (defn some-error-handler-fn [myAgent ex]
   (println (str "Val is " @myAgent " and exception was: \n" ex))
   (println "\nResetting agent!")
-  ;;janky way to set the value back to 10
-  (send time-bomb #(+ (- % %) 10))
+  (send time-bomb #(+ % (- 10 %) ))
+  (swap! times-detonated inc)
   nil)
 
 (set-error-handler! time-bomb some-error-handler-fn)
 
-(dotimes [_ 10]
-    (send time-bomb bomb-tick)
+(Thread/sleep 50)
+
+(dotimes [_ 100]
+   (send time-bomb bomb-tick)
  )
 
-(println @time-bomb )
+(Thread/sleep 500)
+(println (str "Bomb's final value is " @time-bomb ", and it was detonated " @times-detonated " times."))
